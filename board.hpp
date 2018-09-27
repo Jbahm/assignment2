@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -6,26 +7,24 @@ class board
 {
   public:
     board();
-    board(int rows, int columns, string map);
+    board( int rows, int columns, string map);
     ~board();
+
+     int row;
+     int column;
+    string mapLoc;
 
     int getRows();
     int getColumns();
+    char getCell(int row, int col);
+    string getMap();
     void editCell(int rowLoc, int columnLoc, char newContents);
-    char getCell(int rowLoc, int columnLoc);
+    char **grid;
+    char gridCols;
     void copyBoard(board newBoard);
     void printBoard();
+    bool isPopulated(int row, int col);
     void clearBoard();
+    void populate();
 
-    string mapLoc;
-    int row;
-    int column;
-    char grid[rows][columns];
-
-
-
-
-
-
-
-}
+};
