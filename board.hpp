@@ -25,6 +25,7 @@ class board
     void printBoard();
     bool isPopulated(int row, int col);
     void clearBoard();
-    void populate();
+    void populateRandom();
+    void populateMap();
 
 };

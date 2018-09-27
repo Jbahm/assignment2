@@ -1,6 +1,7 @@
 #include "board.hpp"
 #include <iostream>
 #include <ctime>
+#include <fstream>
 #include <cstdlib>
 
 using namespace std;
@@ -60,7 +61,11 @@ void board::copyBoard(board newBoard){
 void board::printBoard(){
   for(int i = 0; i < row; i++){
     for(int j = 0; j < column; j++){
-      cout << "[" << grid[i][j] << "]";
+      if(grid[i][j] = '*'){
+        cout << "X";
+      }else{
+        cout << "-";
+      }
     }
     cout << endl;
   }
@@ -84,7 +89,7 @@ void board::clearBoard(){
   }
 }
 
-void board::populate(){//CHANGE TO ACCOUNT FOR POP DENSITY LATER
+void board::populateRandom(){//CHANGE TO ACCOUNT FOR POP DENSITY LATER
   srand(time(NULL));
   int r;
   for(int i = 0; i < row; i++){
@@ -95,6 +100,22 @@ void board::populate(){//CHANGE TO ACCOUNT FOR POP DENSITY LATER
       }else{
         grid[i][j] = ' ';
       }
+    }
+  }
+}
+
+void board::populateMap(){
+  ifstream layout;
+  int boardHeight;
+  int boardWidth;
+  string currentLine;
+  layout.open(mapLoc);
+  layout >> boardHeight;
+  layout >> boardWidth;
+  for(int i = 0; i < row; i++){
+    layout >> currentLine;
+    for(int j = 0; j < column; j++){
+      grid[i][j] = currentLine[j];
     }
   }
 }
