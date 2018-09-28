@@ -432,55 +432,55 @@ int simulation::countNeighbors(int rowLoc, int colLoc){
   }
   else if((gameMode)=="mirror"){
     // (++ -> single neighbor) (+=2 -> neighbor and reflection) (+=3 -> corner reflection)
-
     if (rowLoc ==0 && colLoc ==0){
       neighbors= 0;
-      if (gameBoard.isPopulated(colLoc,rowLoc) ==true){
+
+      if (gameBoard.isPopulated(colLoc,rowLoc)==true){
         neighbors+=3;
       }
-      if(gameBoard.isPopulated(colLoc,rowLoc+1)==true){
+      if (gameBoard.isPopulated(colLoc+1,rowLoc) ==true){
         neighbors+=2;
       }
-      if (gameBoard.isPopulated(colLoc+1,rowLoc)==true){
-        neighbors+=2;
-      }
-      if (gameBoard.isPopulated(colLoc+1,rowLoc+1)==true){
+      if(gameBoard.isPopulated(colLoc+1,rowLoc+1)==true){
         neighbors++;
       }
-    }
-
-    else if (rowLoc ==0 && colLoc == gameBoard.getColumns()-1){
+      if (gameBoard.isPopulated(colLoc,rowLoc+1)==true){
+        neighbors+=2;
+      }
+      return neighbors;
+    }else if (rowLoc ==0 && colLoc == gameBoard.getColumns()-1){
       neighbors= 0;
       if (gameBoard.isPopulated(colLoc,rowLoc)==true){
-        neighbors++;
+        neighbors+=3;
       }
       if (gameBoard.isPopulated(colLoc,rowLoc+1 )==true){
         neighbors+=2;
       }
-      if (gameBoard.isPopulated( colLoc-1,rowLoc)==true){
+      if (gameBoard.isPopulated(colLoc-1,rowLoc)==true){
         neighbors+=2;
       }
       if (gameBoard.isPopulated(colLoc-1,rowLoc+1 )==true){
         neighbors++;
       }
+      return neighbors;
     }
 
     else if (rowLoc == gameBoard.getRows()-1 && (colLoc==0)){
       neighbors = 0;
-      if (gameBoard.isPopulated(colLoc,rowLoc )==true){
+      if (gameBoard.isPopulated(colLoc,rowLoc)==true){
         neighbors+=3;
       }
-      if (gameBoard.isPopulated(colLoc,rowLoc-1 )==true){
+      if (gameBoard.isPopulated(colLoc,rowLoc-1)==true){
         neighbors+=2;
       }
-      if (gameBoard.isPopulated(colLoc+1,rowLoc )==true){
+      if (gameBoard.isPopulated(colLoc+1,rowLoc)==true){
         neighbors+=2;
       }
       if (gameBoard.isPopulated(colLoc+1,rowLoc-1 )==true){
         neighbors++;
       }
+      return neighbors;
     }
-
     else if (rowLoc == gameBoard.getRows()-1 && colLoc == gameBoard.getColumns()-1){
       neighbors = 0;
       if (gameBoard.isPopulated(colLoc,rowLoc )==true){
@@ -489,20 +489,20 @@ int simulation::countNeighbors(int rowLoc, int colLoc){
       if (gameBoard.isPopulated(colLoc, rowLoc-1)==true){
         neighbors+=2;
       }
-      if (gameBoard.isPopulated(colLoc-1,rowLoc )==true){
+      if (gameBoard.isPopulated(colLoc-1,rowLoc)==true){
         neighbors+=2;
       }
       if (gameBoard.isPopulated(colLoc-1,rowLoc-1 )==true){
         neighbors++;
       }
+      return neighbors;
     }
-
-    else if (rowLoc==0){
+    else if (rowLoc==0 && colLoc != 0 && colLoc != gameBoard.getColumns()-1){
       neighbors = 0;
-      if (gameBoard.isPopulated(colLoc,rowLoc )==true){
+      if (gameBoard.isPopulated(colLoc,rowLoc)==true){
         neighbors++;
       }
-      if (gameBoard.isPopulated(colLoc,rowLoc-1 )==true){
+      if (gameBoard.isPopulated(colLoc,rowLoc+1 )==true){
         neighbors++;
       }
       if (gameBoard.isPopulated(colLoc-1,rowLoc )==true){
@@ -511,14 +511,15 @@ int simulation::countNeighbors(int rowLoc, int colLoc){
       if (gameBoard.isPopulated(colLoc+1,rowLoc )==true){
         neighbors+=2;
       }
-      if (gameBoard.isPopulated(colLoc+1,rowLoc-1 )==true){
+      if (gameBoard.isPopulated(colLoc+1,rowLoc+1 )==true){
         neighbors++;
       }
-      if (gameBoard.isPopulated(colLoc-1,rowLoc-1 )==true){
+      if (gameBoard.isPopulated(colLoc-1,rowLoc+1 )==true){
         neighbors++;
       }
+      return neighbors;
     }
-    else if (colLoc==0){
+    else if (colLoc==0 && rowLoc != 0 && rowLoc != gameBoard.getRows()-1){
       neighbors = 0;
       if (gameBoard.isPopulated(colLoc,rowLoc )==true){
         neighbors++;
@@ -532,12 +533,81 @@ int simulation::countNeighbors(int rowLoc, int colLoc){
       if (gameBoard.isPopulated(colLoc-1, rowLoc )==true){
         neighbors++;
       }
-      if (gameBoard.isPopulated( colLoc-1, rowLoc+1)==true){
+      if (gameBoard.isPopulated(colLoc+1, rowLoc-1)==true){
         neighbors++;
       }
-      if (gameBoard.isPopulated(colLoc-1, rowLoc-1 )==true){
+      if (gameBoard.isPopulated(colLoc+1, rowLoc+1 )==true){
         neighbors++;
       }
+      return neighbors;
+    }
+    else if(colLoc == gameBoard.getColumns()-1 && rowLoc != 0 && rowLoc != gameBoard.getRows()-1){
+      if (gameBoard.isPopulated(colLoc,rowLoc)==true){
+        neighbors++;
+      }
+      if (gameBoard.isPopulated(colLoc,rowLoc+1)==true){
+        neighbors+=2;
+      }
+      if (gameBoard.isPopulated(colLoc,rowLoc-1)==true){
+        neighbors+= 2;
+      }
+      if (gameBoard.isPopulated(colLoc-1,rowLoc)==true){
+        neighbors++;
+      }
+      if (gameBoard.isPopulated(colLoc-1,rowLoc+1)==true){
+        neighbors++;
+      }
+      if (gameBoard.isPopulated(colLoc-1,rowLoc-1)==true){
+        neighbors++;
+      }
+      return neighbors;
+    }
+    else if(rowLoc == gameBoard.getRows()-1 && colLoc != 0 && colLoc != gameBoard.getColumns()-1){
+      if (gameBoard.isPopulated(colLoc,rowLoc)==true){
+        neighbors++;
+      }
+      if (gameBoard.isPopulated(colLoc,rowLoc-1)==true){
+        neighbors++;
+      }
+      if (gameBoard.isPopulated(colLoc+1,rowLoc)==true){
+        neighbors+=2;
+      }
+      if (gameBoard.isPopulated(colLoc+1,rowLoc-1)==true){
+        neighbors++;
+      }
+      if (gameBoard.isPopulated(colLoc-1,rowLoc)==true){
+        neighbors+=2;
+      }
+      if (gameBoard.isPopulated(colLoc-1,rowLoc-1)==true){
+        neighbors++;
+      }
+      return neighbors;
+    }else{
+      if (gameBoard.isPopulated(colLoc,rowLoc+1)==true){
+        neighbors++;
+      }
+      if (gameBoard.isPopulated(colLoc,rowLoc-1)==true){
+        neighbors++;
+      }
+      if (gameBoard.isPopulated(colLoc+1,rowLoc)==true){
+        neighbors++;
+      }
+      if (gameBoard.isPopulated(colLoc+1,rowLoc+1)==true){
+        neighbors++;
+      }
+      if (gameBoard.isPopulated(colLoc+1,rowLoc-1)==true){
+        neighbors++;
+      }
+      if (gameBoard.isPopulated(colLoc-1,rowLoc)==true){
+        neighbors++;
+      }
+      if (gameBoard.isPopulated(colLoc-1,rowLoc+1)==true){
+        neighbors++;
+      }
+      if (gameBoard.isPopulated(colLoc-1,rowLoc-1)==true){
+        neighbors++;
+      }
+      return neighbors;
     }
   }
 }
@@ -550,14 +620,7 @@ void simulation::advanceGeneration(){
   {
     for(int j = 0; j < gameBoard.getColumns(); j++)
     {
-      cout << "test" << endl;
       neighbors = countNeighbors(i, j);
-      cout << "I: " << i << endl;
-      cout << "J: " << j << endl;
-      cout << "Neighbors: " << neighbors << endl;
-
-
-
       if(neighbors <= 1)
       {
         nextGen.editCell(i, j, '-');
