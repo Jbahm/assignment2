@@ -8,7 +8,7 @@ class board
   public:
     board();
     board( int rows, int columns, string map);
-    ~board();
+    //~board();
 
      int row;
      int column;
@@ -25,7 +25,7 @@ class board
     void printBoard();
     bool isPopulated(int row, int col);
     void clearBoard();
-    void populateRandom();
-    void populateMap();
+    void populateRandom(double populationDensity);
+    void populateMap(string targetMap);
 
 };

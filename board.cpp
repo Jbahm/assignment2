@@ -7,9 +7,9 @@
 using namespace std;
 
 board::board(){
-  //row = 1;
-  //column = 1;
-  //grid = new char[1];
+  row = 1;
+  column = 1;
+  grid = new char*[1];
 }
 
 board::board( int rows,  int columns, string map){
@@ -17,16 +17,15 @@ board::board( int rows,  int columns, string map){
   column = columns;
   string mapLoc = map;    //string of map file (map locator)
   grid = new char*[row];
-  char gridCols[column];
   for(int i = 0; i < row; i++){
-    grid[i] = gridCols;
+    grid[i] = new char[column];
   }
 }
 
-board::~board(){
-  delete grid;
-cout << "board deleted" << endl;
-}//make sure we are deleting the right thing
+//board::~board(){
+  //delete grid;
+//cout << "board deleted" << endl;
+//}//make sure we are deleting the right thing
 
 int board::getRows(){
   return row;
@@ -61,7 +60,7 @@ void board::copyBoard(board newBoard){
 void board::printBoard(){
   for(int i = 0; i < row; i++){
     for(int j = 0; j < column; j++){
-      if(grid[i][j] = '*'){
+      if(grid[i][j] == '*'){
         cout << "X";
       }else{
         cout << "-";
@@ -69,6 +68,7 @@ void board::printBoard(){
     }
     cout << endl;
   }
+  cout << "" << endl;
 }
 
 
@@ -84,38 +84,42 @@ bool board::isPopulated(int col, int row){
 void board::clearBoard(){
   for(int i = 0; i < row; i++){
     for(int j = 0; j < column; j++){
-      grid[i][j] = ' ';
+      grid[i][j] = '-';
     }
   }
 }
 
-void board::populateRandom(){//CHANGE TO ACCOUNT FOR POP DENSITY LATER
+void board::populateRandom(double populationDensity){//CHANGE TO ACCOUNT FOR POP DENSITY LATER
   srand(time(NULL));
   int r;
+  int maxPopulation = populationDensity*row*column;
   for(int i = 0; i < row; i++){
     for(int j = 0; j < column; j++){
-      r = (rand() % 10) + 1;
-      if(r % 2 == 0){
+      r = (rand()%10) + 1;
+      if(r%2 == 0 && (maxPopulation > 0)){
         grid[i][j] = '*';
+        maxPopulation-1;
       }else{
-        grid[i][j] = ' ';
+        grid[i][j] = '-';
       }
     }
   }
 }
 
-void board::populateMap(){
+void board::populateMap(string targetMap){
   ifstream layout;
-  int boardHeight;
-  int boardWidth;
   string currentLine;
-  layout.open(mapLoc);
-  layout >> boardHeight;
-  layout >> boardWidth;
-  for(int i = 0; i < row; i++){
+  layout.open(targetMap);
+  for(int i = 0; i < row+2; i++){
     layout >> currentLine;
+    if(i > 1){
     for(int j = 0; j < column; j++){
-      grid[i][j] = currentLine[j];
+      if(currentLine[j] == 'X'){
+        grid[i-2][j] = '*';
+      }else{
+        grid[i-2][j] = '-';
+      }
     }
+  }
   }
 }
