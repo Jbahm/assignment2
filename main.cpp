@@ -16,17 +16,20 @@ void gameLoop(board map){
   cin >> mode;
   simulation game(map, mode);
   cout << "" << endl;
-  cout << generations << endl;
-  map.printBoard();
 
   cout << "How would you like the results displayed?: " << endl;
   cout << "in the terminal?(type a 0)" << endl;
   cout << "or to a file?(type a 1)" << endl;
   cin >> outputOption;
+  cout << "" << endl;
 
   cout << "How many generations would you like the simulation to run for?: " << endl;
   cout << "Enter 0 if you want it to run until the world stabalizes or is empty!" << endl;
   cin >> maxGenerations;
+  cout << "" << endl;
+  cout << generations << endl;
+  map.printBoard();
+
   if(maxGenerations > 0){
     for(int i = 0; i < maxGenerations; i++){
       generations++;
@@ -35,7 +38,7 @@ void gameLoop(board map){
         cout << generations << endl;
         map.printBoard();
       }else{
-        map.outputBoard(generations);
+      //  map.outputBoard(generations);
       }
     }
   }else{

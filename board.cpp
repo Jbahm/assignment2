@@ -123,3 +123,19 @@ void board::populateMap(string targetMap){
   }
   }
 }
+
+/*void board::outputBoard(){
+  ofstream outfile;
+  ofstream.open("output.txt");
+  for(int i = 0; i < row; i++){
+    for(int j = 0; j < column; j++){
+      if(grid[i][j] == '*'){
+        outfile << "X";
+      }else{
+        cout << "-";
+      }
+    }
+    cout << endl;
+  }
+  cout << "" << endl;
+}*/
