@@ -27,5 +27,6 @@ class board
     void clearBoard();
     void populateRandom(double populationDensity);
     void populateMap(string targetMap);
-
+    void outputBoard(int generations);
+    bool isEqual(board board2);
 };

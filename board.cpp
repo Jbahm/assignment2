@@ -6,26 +6,22 @@
 
 using namespace std;
 
-board::board(){
+board::board(){ //constuctor
   row = 1;
   column = 1;
   grid = new char*[1];
 }
 
-board::board( int rows,  int columns, string map){
+board::board( int rows,  int columns, string map){  // overloaded constructor
   row = rows;
   column = columns;
   string mapLoc = map;    //string of map file (map locator)
   grid = new char*[row];
+  //dynmically creates the grid
   for(int i = 0; i < row; i++){
     grid[i] = new char[column];
   }
 }
-
-//board::~board(){
-  //delete grid;
-//cout << "board deleted" << endl;
-//}//make sure we are deleting the right thing
 
 int board::getRows(){
   return row;
@@ -35,19 +31,19 @@ int board::getColumns(){
   return column;
 }
 
-string board::getMap(){
+string board::getMap(){  //gets the name of the text file whne called
   return mapLoc;
 }
 
-char board::getCell(int row, int col){
+char board::getCell(int row, int col){   //returns contents of the cell
   return grid[row][col];
 }
 
-void board::editCell(int rowLoc, int columnLoc, char newContents){
+void board::editCell(int rowLoc, int columnLoc, char newContents){  // edits the cell
     grid[rowLoc][columnLoc] = newContents;
 }
 
-void board::copyBoard(board newBoard){
+void board::copyBoard(board newBoard){     //copies the contents of the perameter board to the current board
   for(int i = 0; i < row; i++){
     for(int j = 0; j < column; j++){
       char contents = newBoard.getCell(i, j);
@@ -57,7 +53,7 @@ void board::copyBoard(board newBoard){
 }
 
 
-void board::printBoard(){
+void board::printBoard(){    //prints the current board
   for(int i = 0; i < row; i++){
     for(int j = 0; j < column; j++){
       if(grid[i][j] == '*'){
@@ -72,7 +68,7 @@ void board::printBoard(){
 }
 
 
-bool board::isPopulated(int col, int row){
+bool board::isPopulated(int col, int row){   //checks f a cell is populated or not
   if(grid[row][col] == '*'){
     return true;
   }else{
@@ -81,7 +77,7 @@ bool board::isPopulated(int col, int row){
 }
 
 
-void board::clearBoard(){
+void board::clearBoard(){   //clears the current board
   for(int i = 0; i < row; i++){
     for(int j = 0; j < column; j++){
       grid[i][j] = '-';
@@ -89,7 +85,7 @@ void board::clearBoard(){
   }
 }
 
-void board::populateRandom(double populationDensity){//CHANGE TO ACCOUNT FOR POP DENSITY LATER
+void board::populateRandom(double populationDensity){    //generates random board based on given population density
   srand(time(NULL));
   int r;
   int maxPopulation = populationDensity*row*column;
@@ -106,7 +102,8 @@ void board::populateRandom(double populationDensity){//CHANGE TO ACCOUNT FOR POP
   }
 }
 
-void board::populateMap(string targetMap){
+
+void board::populateMap(string targetMap){     //populates current board based off of file configuration
   ifstream layout;
   string currentLine;
   layout.open(targetMap);
@@ -124,18 +121,34 @@ void board::populateMap(string targetMap){
   }
 }
 
-/*void board::outputBoard(){
+void board::outputBoard(int generations){  //outs the current board
   ofstream outfile;
-  ofstream.open("output.txt");
+  outfile.open("output.txt", std::ios_base::app);
+  outfile << generations << "\r\n";
   for(int i = 0; i < row; i++){
     for(int j = 0; j < column; j++){
       if(grid[i][j] == '*'){
         outfile << "X";
       }else{
-        cout << "-";
+        outfile << "-";
       }
     }
-    cout << endl;
+    outfile <<"\r\n";
   }
   cout << "" << endl;
-}*/
+}
+
+
+bool board::isEqual(board board2){   //checks if two boards are the same 
+  if(row != board2.getRows() || column != board2.getColumns()){
+    return false;
+  }
+  for(int i = 0; i < row; i++){
+    for(int j = 0; j < column; j++){
+      if(grid[i][j] != board2.getCell(i, j)){
+        return false;
+      }
+    }
+  }
+  return true;
+}

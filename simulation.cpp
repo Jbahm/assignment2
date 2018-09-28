@@ -3,24 +3,16 @@
 using namespace std;
 
 
-simulation::simulation(){
-  //gameBoard = new board(1, 1, "");
+simulation::simulation(){ //constructor
   gameMode = "classic";
 }
 
-simulation::simulation(board grid, string mode){
-  //board gameBoard(grid.getRows(), grid.getColumns(), grid.getMap());
+simulation::simulation(board grid, string mode){ //overload constructor
   gameBoard = grid;
   gameMode = mode;
 }
 
-//simulation::~simulation(){
-  //delete gameBoard;
-  //cout<< "simulation deleted" << endl;
-//}//make sure we are deleting the right thing
-
-
-int simulation::countNeighbors(int rowLoc, int colLoc){
+int simulation::countNeighbors(int rowLoc, int colLoc){   //counts the neighbrs of the given cell in each game mode
   int neighbors = 0;
   if(gameMode == "classic"){
     if(rowLoc == 0 && colLoc==0){
@@ -612,7 +604,7 @@ int simulation::countNeighbors(int rowLoc, int colLoc){
   }
 }
 
-void simulation::advanceGeneration(){
+void simulation::advanceGeneration(){     //Utilizies the count neighbors method to populate a new board based on the rules of the game
 
   board nextGen(gameBoard.getRows(), gameBoard.getColumns(), " ");
   int neighbors = 0;
@@ -651,4 +643,12 @@ void simulation::advanceGeneration(){
 string simulation::getMode()
 {
   return gameMode;
+}
+
+bool simulation::isStable(){   //checks if the simulation has stbilized
+  board newBoard(gameBoard.getRows(), gameBoard.getColumns(), "");
+  newBoard.copyBoard(gameBoard);
+  simulation sim2(newBoard, gameMode);
+  sim2.advanceGeneration();
+  return (gameBoard.isEqual(newBoard));
 }
